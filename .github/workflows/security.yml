@@ -183,6 +183,23 @@ jobs:
           name: semgrep-json
           path: reports
 
+      - name: Check ResponseOne secrets
+        env:
+          RESPONSEONE_API_URL: ${{ secrets.RESPONSEONE_API_URL }}
+          RESPONSEONE_INGEST_TOKEN: ${{ secrets.RESPONSEONE_INGEST_TOKEN }}
+        run: |
+          if [ -z "$RESPONSEONE_API_URL" ]; then
+            echo "ERROR: RESPONSEONE_API_URL is empty"
+            exit 1
+          fi
+
+          if [ -z "$RESPONSEONE_INGEST_TOKEN" ]; then
+            echo "ERROR: RESPONSEONE_INGEST_TOKEN is empty"
+            exit 1
+          fi
+
+          echo "SUCCESS: Both ResponseOne secrets are available"
+
       - name: Send Semgrep findings to ResponseOne
         env:
           RESPONSEONE_API_URL: ${{ secrets.RESPONSEONE_API_URL }}
