@@ -183,6 +183,11 @@ jobs:
           name: semgrep-json
           path: reports
 
+      # ------------------------------------------------------
+      # Test that GitHub Actions received the secrets.
+      # The actual secret values are NEVER printed.
+      # ------------------------------------------------------
+
       - name: Check ResponseOne secrets
         env:
           RESPONSEONE_API_URL: ${{ secrets.RESPONSEONE_API_URL }}
@@ -199,6 +204,10 @@ jobs:
           fi
 
           echo "SUCCESS: Both ResponseOne secrets are available"
+
+      # ------------------------------------------------------
+      # Send Semgrep findings to ResponseOne
+      # ------------------------------------------------------
 
       - name: Send Semgrep findings to ResponseOne
         env:
